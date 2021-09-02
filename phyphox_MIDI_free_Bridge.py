@@ -96,7 +96,9 @@ control_dic = {
     4:[1,2,3],
     5:[1]
 }
-
+#phyphox data type cfg
+print("\n" * 100)
+print("You are supposed to manually set up data type acoording to the sensor operating on your phone ('1' by default): ")
 print("1 - Magnetometer")
 print("2 - Acceleration")
 print("3 - Gyroscope")
@@ -121,8 +123,14 @@ while True:
         input_values.append(data["buffer"][PP_CHANNELS[i]]["buffer"][0])
     print(input_values)
     """put your interface here"""
-    value = round(input_values[0]/10)
-    output.send(mido.Message("control_change", channel=M_CHANNEL, control=control, value=value))
+    # value = abs(math.floor(((abs(input_values[0])+abs(input_values[1])+abs(input_values[2])))))
+    value = abs(math.floor(((abs(input_values[0])+abs(input_values[0])+abs(input_values[0])))))
+    print(value)
+    try:
+        output.send(mido.Message("control_change", channel=M_CHANNEL, control=control, value=value))
+    except:
+        print("MIDI data not in 0-127")
+        pass
 
 
 
